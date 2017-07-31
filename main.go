@@ -151,15 +151,15 @@ func (r Releases) SetDurations() {
 		}
 	}
 
-	// Set releases that don't have a duration to end today. This allows a user
-	// to see where the current release is in comparion to previous releases.
+	// Set last release that doesn't have a duration to end today. This allows a
+	// user to see where the current release is in comparion to previous releases.
 	// This should only affect the latest/current beta or rc and ga.
 	for version, revs := range r {
 		for typ, releases := range revs {
-			for i, release := range releases {
-				if release.duration == 0 {
-					r.SetDuration(version, typ, time.Now(), i)
-				}
+			idx := len(releases) - 1 // last release in chain
+			release := &releases[idx]
+			if release.duration == 0 {
+				r.SetDuration(version, typ, time.Now(), idx)
 			}
 		}
 	}
