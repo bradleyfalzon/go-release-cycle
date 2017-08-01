@@ -77,7 +77,7 @@ type Releases map[Version]map[ReleaseType][]Release
 func MakeReleases(out []byte) (Releases, error) {
 	// sample: go1.7rc1   Thu Jul 7 16:41:29 2016 -0700
 	// go versions: go1.8 or go1.8beta1 or go1.9rc1 or go1.8.1
-	tags := regexp.MustCompile(`go([0-9]+\.[0-9]+)(\.|rc|beta|)([0-9+]|)\t(.*)`+"\n").FindAllStringSubmatch(string(out), -1)
+	tags := regexp.MustCompile(`go([0-9]+\.[0-9]+)(\.|rc|beta|)([0-9]+|),(.*)`+"\n").FindAllStringSubmatch(string(out), -1)
 
 	releases := make(Releases)
 	for _, tag := range tags {
